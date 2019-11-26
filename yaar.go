@@ -3,9 +3,15 @@ package main
 import "fmt"
 
 type Pirata struct {
-	items [3]string
+	items [] string 
 	nivelDeEbriedad int
 	monedas int
+}
+
+type Barco struct{
+	tripulantes [] Pirata 
+	 //mision 
+	capacidad int 
 }
 
 type Leyenda struct {
@@ -31,9 +37,9 @@ func (persona *Pirata) BusquedaDelTesoro() bool {
 	}	
 }
 
-func(persona *Pirata) ConvertirseEnLeyenda() bool {
+func(persona *Pirata) ConvertirseEnLeyenda(itemObligatorio string) bool {
 	var leyenda Leyenda
-	leyenda.itemObligatorio = "Botella"
+	leyenda.itemObligatorio = itemObligatorio
 	
 	tieneElItem := false
 	for i := 0; i < len(persona.items); i++ {
@@ -42,7 +48,7 @@ func(persona *Pirata) ConvertirseEnLeyenda() bool {
 		}
 	}
 	
-	if tieneElItem && persona.monedas >= 10 {	
+	if tieneElItem && len(persona.items) >= 10 {	
 		return true
 	} else {
 		return false
@@ -61,29 +67,34 @@ func (persona *Pirata) Saquear() bool {
 }
 
 func main() {
-	var pirata Pirata
+	var jorge Pirata
+	jorge.items = append(jorge.items,"Manzana")
+	jorge.items = append(jorge.items,"Botella")
+	jorge.items = append(jorge.items,"Mapa")
+	jorge.nivelDeEbriedad = 5
+	jorge.monedas = 3
+
+
+	pedro := Pirata{["Mapa", "Carne", "Brujula", "Cartas"],5,10}
 	
-	pirata.items[0] = "Manzana"
-	pirata.items[1] = "Botella"
-	pirata.items[2] = "Mapa"
-	pirata.nivelDeEbriedad = 5
-	pirata.monedas = 3
-	
-	if pirata.BusquedaDelTesoro() {
+	if jorge.BusquedaDelTesoro() {
 		fmt.Println("El pirata es util para la busqueda del tesoro")
 	} else {
 		fmt.Println("El pirata no es util para la busqueda del tesoro")
 	}
 	
-	if pirata.ConvertirseEnLeyenda() {
+	if jorge.ConvertirseEnLeyenda("Botella") {
 		fmt.Println("El pirata es util para convertirse en leyenda")
 	} else {
 		fmt.Println("El pirata no es util para convertirse en leyenda")
 	}
 	
-	if pirata.Saquear() {	
+	if jorge.Saquear() {	
 		fmt.Println("El pirata es util para saquear")
 	} else {
 		fmt.Println("El pirata no es util para saquear")
 	}
+	slicePrueba := []string{"hola","chau","cusbai"}
+	fmt.Println([hola chau cusbai])
+
 }
