@@ -37,11 +37,7 @@ func (persona *Pirata) BusquedaDelTesoro() bool {
 		}
 	}
 	
-	if tieneElItem && persona.monedas <= 5 {	
-		return true
-	} else {
-		return false
-	}	
+	return tieneElItem && persona.monedas <= 5	
 }
 
 func(persona *Pirata) ConvertirseEnLeyenda(itemObligatorio string) bool {
@@ -55,22 +51,14 @@ func(persona *Pirata) ConvertirseEnLeyenda(itemObligatorio string) bool {
 		}
 	}
 	
-	if tieneElItem && len(persona.items) >= 10 {	
-		return true
-	} else {
-		return false
-	}
+	return tieneElItem && len(persona.items) >= 10 
 }
 
 func (persona *Pirata) Saquear() bool {
 	var saqueo Saqueo
 	saqueo.monedasObligatorias = 5
 	
-	if persona.monedas >= saqueo.monedasObligatorias {
-		return true
-	} else {
-		return false
-	}
+	return persona.monedas >= saqueo.monedasObligatorias 
 }
 
 func (barco *Barco) IncorporarALaTripulacion(persona Pirata) {
@@ -80,11 +68,7 @@ func (barco *Barco) IncorporarALaTripulacion(persona Pirata) {
 }
 
 func (barco *Barco) PuedeFormarParteDeLaTripulacion (persona Pirata) bool {
-	if barco.capacidad > len(barco.tripulantes) {
-		return true
-	} else {
-		return false
-	}
+	return barco.capacidad > len(barco.tripulantes) 
 }
 
 func (barco *Barco) PirataMasEbrio() string {
