@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Pirata struct {
 	nombre string
@@ -71,13 +73,13 @@ func (persona *Pirata) Saquear() bool {
 	}
 }
 
-func (persona Pirata) IncorporarALaTripulacion(barco Barco) {
-	if persona.PuedeFormarParteDeLaTripulacion(barco) {
+func (barco *Barco) IncorporarALaTripulacion(persona Pirata) {
+	if barco.PuedeFormarParteDeLaTripulacion(persona) {
 		barco.tripulantes = append(barco.tripulantes, persona)
 	}
 }
 
-func (persona *Pirata) PuedeFormarParteDeLaTripulacion (barco Barco) bool {
+func (barco *Barco) PuedeFormarParteDeLaTripulacion (persona Pirata) bool {
 	if barco.capacidad > len(barco.tripulantes) {
 		return true
 	} else {
@@ -103,37 +105,25 @@ func (barco *Barco) Anclar(ciudad CiudadCostera) {
 }
 
 func (barco *Barco) TomarTragoDeGrogXD() {
+	
 	for i:=0; i<len(barco.tripulantes); i++ {
 		barco.tripulantes[i].nivelDeEbriedad += 5
+		
+		if barco.tripulantes[i].monedas > 0 {
 		barco.tripulantes[i].monedas -= 1 
+		} else {
+		 // lanzar un error
+		}
 	}
 }
 
 func main() {
-	var jorge Pirata
-	jorge.nombre = "Jorge"
-	jorge.items = append(jorge.items,"Manzana")
-	jorge.items = append(jorge.items,"Botella")
-	jorge.items = append(jorge.items,"Mapa")
-	jorge.nivelDeEbriedad = 5
-	jorge.monedas = 3
 	
-	var pedro Pirata
-	pedro.nombre = "Pedro"
-	pedro.items = append(jorge.items,"Libro")
-	pedro.items = append(jorge.items,"Garfio")
-	pedro.items = append(jorge.items,"Brujula")
-	pedro.nivelDeEbriedad = 10
-	pedro.monedas = 5
 	
-	var carlos Pirata
-	carlos.nombre = "Carlos"
-	carlos.items = append(carlos.items,"Parche")
-	carlos.items = append(carlos.items,"Mapa")
-	carlos.items = append(carlos.items,"Whisky")
-	carlos.nivelDeEbriedad = 13
-	carlos.monedas = 1
-	
+	jorge := Pirata{"Jorge",[]string{"Manzana", "Botella", "Mapa"},5,3}
+	pedro := Pirata{"Pedro",[]string{"Mapa", "Carne", "Brujula", "Cartas"},5,10}
+	carlos := Pirata{"Carlos",[]string{"Parche","Mapa","Whisky"},13,1}
+		
 	var perlaNegra Barco
 	perlaNegra.tripulantes = append(perlaNegra.tripulantes, jorge)
 	perlaNegra.tripulantes = append(perlaNegra.tripulantes, carlos)
@@ -141,8 +131,6 @@ func main() {
 
 	var trianguloDeLasBermudas CiudadCostera
 	trianguloDeLasBermudas.habitantes = 10
-
-	//pedro := Pirata{["Mapa", "Carne", "Brujula", "Cartas"],5,10}
 	
 	if jorge.BusquedaDelTesoro() {
 		fmt.Println("El pirata es util para la busqueda del tesoro")
@@ -161,10 +149,14 @@ func main() {
 	} else {
 		fmt.Println("El pirata no es util para saquear")
 	}
+	
 	//slicePrueba := []string{"hola","chau","cusbai"}
 	//fmt.Println([hola chau cusbai])
 
-	pedro.IncorporarALaTripulacion(perlaNegra)
+        fmt.Println(perlaNegra)
+	perlaNegra.IncorporarALaTripulacion(pedro)
+	fmt.Println(perlaNegra)
+	
 	fmt.Println("Capacidad del Perla Negra:", len(perlaNegra.tripulantes))
 	
 	fmt.Println("Pirata mas ebrio del Perla Negra:" , perlaNegra.PirataMasEbrio())
